@@ -71,12 +71,10 @@
             z-index: 200;
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 5%; 
-            /* CHANGE: Adjusted for smoother, seamless animation */
             transform: translateY(-100%); 
             opacity: 0; 
             transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease;
         }
-        /* CHANGE: Logo reduced to 2/3rd size (100px down from 150px) */
         .top-nav-logo img { height: 100px; width: auto; object-fit: contain; }
         .top-nav-links { display: flex; gap: 40px; }
         .top-nav-links a {
@@ -141,18 +139,55 @@
         }
         .highlight { color: #000000; font-weight: 700; } /* Black highlight */
 
-        /* Responsive Adjustments */
+        /* =========================================================
+           MOBILE RESPONSIVE OVERHAUL (Fixed Overlaps & Layout)
+           ========================================================= */
         @media (max-width: 768px) {
-            #hero-brand { height: 100px; }
-            #hero-brand img { height: 100px; }
-            #hero-brand .brand-text { font-size: 1.2rem; }
+            /* 1. Hero Brand: Stack and center neatly at the top */
+            #hero-brand { 
+                top: 30px; 
+                left: 50%; 
+                transform: translateX(-50%);
+                height: auto; 
+                flex-direction: column; 
+                gap: 10px; 
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+            #hero-brand img { height: 75px; }
+            #hero-brand .brand-text { font-size: 1.1rem; letter-spacing: 3px; }
+
+            /* 2. Text Box: Anchor to the bottom, frame the car in the middle */
+            .hero-content { 
+                top: auto; 
+                bottom: 8%; 
+                left: 50%; 
+                transform: translate(-50%, 0); 
+                width: 92%; 
+            }
+            .hero-text-overlay { 
+                font-size: 0.85rem; 
+                line-height: 1.6; 
+                padding: 20px; 
+                border-left: none; /* Remove left border */
+                border-top: 3px solid var(--gold); /* Add top border for a clean card look */
+                background: rgba(3, 3, 3, 0.65); /* Slightly darker for better contrast */
+            }
+
+            /* 3. Hide non-essential desktop navigations */
             #left-nav { display: none; }
-            .hero-text-overlay { font-size: 1rem; padding: 20px; }
+            .top-nav-links { display: none; }
+
+            /* 4. Top Nav (Scrolled State) sizing for mobile */
+            #top-nav { padding: 15px 20px; } 
+            .top-nav-logo img { height: 60px; } 
+
+            /* 5. Purpose Section */
             .purpose-image-container { height: 50vh; }
             .purpose-text-container { padding: 15% 5%; }
-            #top-nav { padding: 5px 20px; } 
-            .top-nav-logo img { height: 70px; } /* Scaled down for mobile */
-            .top-nav-links { display: none; }
+            .section-title { font-size: 1.8rem; margin-bottom: 25px; }
+            .purpose-paragraph { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -250,11 +285,10 @@
             /* =========================================
                3. NAVIGATION MORPHING (SCROLLTRIGGER)
                ========================================= */
-            // Adjusted so the top bar waits longer to come down (progress > 0.70 instead of 0.3)
             ScrollTrigger.create({
                 trigger: "#hero",
                 start: "top top",
-                end: "bottom top", // Changed to give a longer trigger area
+                end: "bottom top", 
                 onUpdate: (self) => {
                     if(self.progress > 0.70) {
                         // Hide Left Nav and Hero Brand, Show Top Nav smoothly
