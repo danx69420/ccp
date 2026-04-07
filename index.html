@@ -99,8 +99,9 @@
             background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%);
         }
 
+        /* CHANGED: Moved desktop text box up by ~20% */
         .hero-content {
-            position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%);
+            position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
             z-index: 10; text-align: center; width: 80%; max-width: 900px;
         }
         .hero-text-overlay {
@@ -171,39 +172,39 @@
 
             /* 3. Text Box: Move UP into the dark space, making text smaller */
             .hero-content { 
-                top: 25%; /* Pushed up to leave the car 100% uncovered */
+                top: 25%; /* Mobile override prevents desktop changes from affecting this */
                 bottom: auto; 
                 left: 50%; 
                 transform: translate(-50%, 0); 
                 width: 90%; 
             }
             .hero-text-overlay { 
-                font-size: 0.75rem; /* Significantly smaller text */
+                font-size: 0.75rem; 
                 line-height: 1.6; 
                 padding: 15px; 
                 border-left: none; 
-                border-top: 2px solid var(--gold); /* Clean top border for mobile card */
+                border-top: 2px solid var(--gold); 
                 background: rgba(3, 3, 3, 0.4); 
             }
 
-            /* 4. Hide horizontal side bar entirely as requested */
+            /* 4. Hide horizontal side bar entirely */
             #left-nav { display: none; }
 
             /* 5. FIX THE MENU: Bring top nav links back, optimized for small screens */
             #top-nav { 
                 padding: 10px 5%; 
-                flex-direction: column; /* Stack logo above links */
+                flex-direction: column; 
                 gap: 8px;
             } 
-            .top-nav-logo img { height: 50px; } /* Shrink logo on scroll for mobile */
+            .top-nav-logo img { height: 50px; } 
             .top-nav-links { 
                 display: flex; 
-                gap: 15px; /* Tighter spacing */
+                gap: 15px; 
                 width: 100%;
                 justify-content: center;
             }
             .top-nav-links a {
-                font-size: 0.65rem; /* Small, elegant font size for mobile menu */
+                font-size: 0.65rem; 
                 letter-spacing: 1px;
             }
 
