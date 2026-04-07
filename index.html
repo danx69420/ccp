@@ -32,18 +32,17 @@
 
         h1, h2, h3, .cinzel { font-family: 'Cinzel', serif; }
 
-        /* --- PRELOADER (3D LOGO) --- */
-        #preloader {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: var(--dark); z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            perspective: 1200px;
+        /* --- HERO BRAND (STATIC BEFORE SCROLL) --- */
+        #hero-brand {
+            position: fixed; top: 0; left: 5%; height: 150px;
+            z-index: 150; display: flex; align-items: center; gap: 20px;
+            transition: opacity 0.8s ease;
         }
-        .preloader-text-wrapper { transform-style: preserve-3d; text-align: center; }
-        .preloader-line { display: block; margin: 10px 0; transform-style: preserve-3d; font-family: 'Cinzel', serif; color: var(--gold); }
-        .preloader-letter {
-            display: inline-block; transform-style: preserve-3d;
-            text-shadow: 0px 5px 20px rgba(212, 175, 55, 0.5);
+        #hero-brand img { height: 150px; width: auto; object-fit: contain; }
+        #hero-brand .brand-text {
+            font-family: 'Cinzel', serif; font-size: 1.8rem;
+            color: var(--gold); letter-spacing: 4px; font-weight: 700;
+            text-shadow: 0px 4px 15px rgba(0,0,0,0.9);
         }
 
         /* --- NAVIGATION: LEFT SIDEBAR (HERO) --- */
@@ -54,7 +53,7 @@
             border: 1px solid var(--glass-border);
             padding: 30px 20px; border-radius: 15px;
             display: flex; flex-direction: column; gap: 30px;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
         .nav-link {
             writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
@@ -66,15 +65,19 @@
 
         /* --- NAVIGATION: TOP BAR (SCROLLED) --- */
         #top-nav {
-            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
-            background: rgba(3, 3, 3, 0.9); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            position: fixed; top: 0; left: 0; width: 100%; min-height: auto;
+            background: rgba(3, 3, 3, 0.8); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--glass-border);
             z-index: 200;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; transform: translateY(-100%); /* Hidden initially */
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 0 5%; 
+            /* CHANGE: Adjusted for smoother, seamless animation */
+            transform: translateY(-100%); 
+            opacity: 0; 
+            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease;
         }
-        .top-nav-logo img { height: 50px; width: auto; object-fit: contain; }
+        /* CHANGE: Logo reduced to 2/3rd size (100px down from 150px) */
+        .top-nav-logo img { height: 100px; width: auto; object-fit: contain; }
         .top-nav-links { display: flex; gap: 40px; }
         .top-nav-links a {
             color: #fff; text-decoration: none; font-size: 0.85rem; letter-spacing: 2px;
@@ -99,7 +102,7 @@
         }
 
         .hero-content {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%);
             z-index: 10; text-align: center; width: 80%; max-width: 900px;
         }
         .hero-text-overlay {
@@ -113,7 +116,8 @@
         /* --- PURPOSE SECTION --- */
         #purpose {
             display: flex; flex-wrap: wrap; width: 100vw; min-height: 100vh;
-            background-color: var(--dark); position: relative;
+            background-color: #FFFFFF; /* White background */
+            position: relative;
         }
         .purpose-image-container {
             flex: 1 1 40%; min-width: 300px; height: 100vh; position: relative; overflow: hidden;
@@ -127,38 +131,39 @@
             display: flex; flex-direction: column; justify-content: center;
         }
         .section-title {
-            font-size: 2.5rem; color: var(--gold); margin-bottom: 40px;
-            letter-spacing: 5px; text-transform: uppercase;
+            font-size: 2.5rem; color: #b8860b; /* Darker Gold for visibility on white */ 
+            margin-bottom: 40px; letter-spacing: 5px; text-transform: uppercase;
         }
         .purpose-paragraph {
             font-size: 1.1rem; line-height: 2; margin-bottom: 25px;
-            color: #d1d1d1; opacity: 0; transform: translateY(30px); /* Setup for ScrollTrigger */
+            color: #333333; /* Dark Grey text for white background */ 
+            opacity: 0; transform: translateY(30px); /* Setup for ScrollTrigger */
         }
-        .highlight { color: #fff; font-weight: 600; }
+        .highlight { color: #000000; font-weight: 700; } /* Black highlight */
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
+            #hero-brand { height: 100px; }
+            #hero-brand img { height: 100px; }
+            #hero-brand .brand-text { font-size: 1.2rem; }
             #left-nav { display: none; }
             .hero-text-overlay { font-size: 1rem; padding: 20px; }
             .purpose-image-container { height: 50vh; }
             .purpose-text-container { padding: 15% 5%; }
-            #top-nav { padding: 0 20px; }
-            .top-nav-links { display: none; /* In a real scenario, add a hamburger menu here */ }
+            #top-nav { padding: 5px 20px; } 
+            .top-nav-logo img { height: 70px; } /* Scaled down for mobile */
+            .top-nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div id="preloader">
-        <div class="preloader-text-wrapper">
-            <div class="preloader-line" id="load-line1" style="font-size: 3rem; letter-spacing: 15px;">CAR</div>
-            <div class="preloader-line" id="load-line2" style="font-size: 1.5rem; letter-spacing: 20px; margin: 15px 0;">CLUB OF</div>
-            <div class="preloader-line" id="load-line3" style="font-size: 3rem; letter-spacing: 15px;">PUNE</div>
-        </div>
+    <div id="hero-brand" style="opacity: 0;">
+        <img src="ccp.png" alt="CCP Logo">
+        <span class="brand-text">CAR CLUB OF PUNE</span>
     </div>
 
-    <nav id="left-nav">
-        <a href="/about" class="nav-link">About Us</a>
+    <nav id="left-nav" style="opacity: 0;"> <a href="/about" class="nav-link">About Us</a>
         <a href="/events" class="nav-link">Past Events</a>
         <a href="/gallery" class="nav-link">Gallery</a>
         <a href="/media" class="nav-link">Media</a>
@@ -182,8 +187,7 @@
             <div class="slide" style="background-image: url('dronemaher.jpg');"></div>
         </div>
         
-        <div class="hero-content">
-            <div class="hero-text-overlay cinzel">
+        <div class="hero-content" style="opacity: 0;"> <div class="hero-text-overlay cinzel">
                 Car Club of Pune is an initiative dedicated to building a vibrant community of passionate car collectors and enthusiasts across the city. Our aim is to nurture and celebrate the love for automobiles among Punekars - children and adults alike - creating an environment where families can come together and cherish the memories they create, one mile at a time.
             </div>
         </div>
@@ -216,48 +220,18 @@
         gsap.registerPlugin(ScrollTrigger);
 
         window.onload = () => {
-            /* =========================================
-               1. THE PRELOADER ANIMATION 
-               ========================================= */
-            function splitText(id) {
-                const el = document.getElementById(id);
-                const txt = el.innerText;
-                el.innerHTML = txt.split('').map(c => 
-                    c === ' ' ? '&nbsp;' : `<span class="preloader-letter">${c}</span>`
-                ).join('');
-            }
-            splitText("load-line1"); splitText("load-line2"); splitText("load-line3");
-
-            const letters = document.querySelectorAll('.preloader-letter');
             
-            // Randomly scatter letters in 3D space
-            gsap.set(letters, {
-                x: () => (Math.random() - 0.5) * 2000,
-                y: () => (Math.random() - 0.5) * 2000,
-                z: () => Math.random() * -3000 - 500,
-                rotationX: () => Math.random() * 720,
-                rotationY: () => Math.random() * 720,
-                opacity: 0
-            });
-
-            // Assemble timeline
-            const preloaderTl = gsap.timeline();
-            preloaderTl.to(letters, {
-                x: 0, y: 0, z: 0, rotationX: 0, rotationY: 0, opacity: 1,
-                duration: 2.5, stagger: { amount: 1.2, from: "random" },
-                ease: "power3.out", delay: 0.3
-            })
-            // Wait a moment for them to read it, then slide up and fade out
-            .to("#preloader", {
-                yPercent: -100,
-                opacity: 0,
-                duration: 1.2,
-                ease: "power4.inOut",
-                onComplete: () => {
-                    document.getElementById('preloader').style.display = 'none';
-                    startSlideshow(); // Trigger background slideshow after load
-                }
-            }, "+=0.8");
+            /* =========================================
+               1. NORMAL INTRO ANIMATION (Fade In)
+               ========================================= */
+            // Fade in the hero text box
+            gsap.to(".hero-content", { opacity: 1, y: 0, duration: 1.5, ease: "power2.out", delay: 0.2 });
+            // Fade in the left side navigation
+            gsap.to("#left-nav", { opacity: 1, duration: 1.5, ease: "power2.out", delay: 0.5 });
+            // Fade in the static hero brand
+            gsap.to("#hero-brand", { opacity: 1, duration: 1.5, ease: "power2.out", delay: 0.5 });
+            
+            startSlideshow();
 
             /* =========================================
                2. SLIDESHOW LOGIC
@@ -276,22 +250,30 @@
             /* =========================================
                3. NAVIGATION MORPHING (SCROLLTRIGGER)
                ========================================= */
-            // When user scrolls past 20% of the Hero section, transition navs
+            // Adjusted so the top bar waits longer to come down (progress > 0.70 instead of 0.3)
             ScrollTrigger.create({
                 trigger: "#hero",
                 start: "top top",
-                end: "bottom center",
+                end: "bottom top", // Changed to give a longer trigger area
                 onUpdate: (self) => {
-                    if(self.progress > 0.3) {
-                        // Hide Left Nav, Show Top Nav
+                    if(self.progress > 0.70) {
+                        // Hide Left Nav and Hero Brand, Show Top Nav smoothly
                         document.getElementById('left-nav').style.opacity = '0';
                         document.getElementById('left-nav').style.pointerEvents = 'none';
+                        document.getElementById('hero-brand').style.opacity = '0';
+                        document.getElementById('hero-brand').style.pointerEvents = 'none';
+                        
                         document.getElementById('top-nav').style.transform = 'translateY(0)';
+                        document.getElementById('top-nav').style.opacity = '1';
                     } else {
-                        // Reverse it
+                        // Reverse it smoothly
                         document.getElementById('left-nav').style.opacity = '1';
                         document.getElementById('left-nav').style.pointerEvents = 'all';
+                        document.getElementById('hero-brand').style.opacity = '1';
+                        document.getElementById('hero-brand').style.pointerEvents = 'all';
+                        
                         document.getElementById('top-nav').style.transform = 'translateY(-100%)';
+                        document.getElementById('top-nav').style.opacity = '0';
                     }
                 }
             });
