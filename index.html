@@ -140,53 +140,77 @@
         .highlight { color: #000000; font-weight: 700; } /* Black highlight */
 
         /* =========================================================
-           MOBILE RESPONSIVE OVERHAUL (Fixed Overlaps & Layout)
+           MOBILE RESPONSIVE OVERHAUL (Flawless Vertical Layout)
            ========================================================= */
         @media (max-width: 768px) {
-            /* 1. Hero Brand: Stack and center neatly at the top */
+            
+            /* 1. Fully visible car: Use contain and push it to the bottom half */
+            .slide {
+                background-size: contain; 
+                background-position: center bottom 15%; 
+            }
+            /* Adjust gradient for portrait orientation so the top stays dark for text */
+            .slide::after {
+                background: linear-gradient(to bottom, rgba(3,3,3,1) 0%, rgba(3,3,3,0) 60%, rgba(3,3,3,0.8) 100%);
+            }
+
+            /* 2. Hero Brand: Stack and center neatly at the very top */
             #hero-brand { 
-                top: 30px; 
+                top: 15px; 
                 left: 50%; 
                 transform: translateX(-50%);
                 height: auto; 
                 flex-direction: column; 
-                gap: 10px; 
+                gap: 5px; 
                 width: 100%;
                 justify-content: center;
                 text-align: center;
             }
-            #hero-brand img { height: 75px; }
+            #hero-brand img { height: 60px; }
             #hero-brand .brand-text { font-size: 1.1rem; letter-spacing: 3px; }
 
-            /* 2. Text Box: Anchor to the bottom, frame the car in the middle */
+            /* 3. Text Box: Move UP into the dark space, making text smaller */
             .hero-content { 
-                top: auto; 
-                bottom: 8%; 
+                top: 25%; /* Pushed up to leave the car 100% uncovered */
+                bottom: auto; 
                 left: 50%; 
                 transform: translate(-50%, 0); 
-                width: 92%; 
+                width: 90%; 
             }
             .hero-text-overlay { 
-                font-size: 0.85rem; 
+                font-size: 0.75rem; /* Significantly smaller text */
                 line-height: 1.6; 
-                padding: 20px; 
-                border-left: none; /* Remove left border */
-                border-top: 3px solid var(--gold); /* Add top border for a clean card look */
-                background: rgba(3, 3, 3, 0.65); /* Slightly darker for better contrast */
+                padding: 15px; 
+                border-left: none; 
+                border-top: 2px solid var(--gold); /* Clean top border for mobile card */
+                background: rgba(3, 3, 3, 0.4); 
             }
 
-            /* 3. Hide non-essential desktop navigations */
+            /* 4. Hide horizontal side bar entirely as requested */
             #left-nav { display: none; }
-            .top-nav-links { display: none; }
 
-            /* 4. Top Nav (Scrolled State) sizing for mobile */
-            #top-nav { padding: 15px 20px; } 
-            .top-nav-logo img { height: 60px; } 
+            /* 5. FIX THE MENU: Bring top nav links back, optimized for small screens */
+            #top-nav { 
+                padding: 10px 5%; 
+                flex-direction: column; /* Stack logo above links */
+                gap: 8px;
+            } 
+            .top-nav-logo img { height: 50px; } /* Shrink logo on scroll for mobile */
+            .top-nav-links { 
+                display: flex; 
+                gap: 15px; /* Tighter spacing */
+                width: 100%;
+                justify-content: center;
+            }
+            .top-nav-links a {
+                font-size: 0.65rem; /* Small, elegant font size for mobile menu */
+                letter-spacing: 1px;
+            }
 
-            /* 5. Purpose Section */
-            .purpose-image-container { height: 50vh; }
+            /* 6. Purpose Section adjustments */
+            .purpose-image-container { height: 40vh; }
             .purpose-text-container { padding: 15% 5%; }
-            .section-title { font-size: 1.8rem; margin-bottom: 25px; }
+            .section-title { font-size: 1.6rem; margin-bottom: 20px; }
             .purpose-paragraph { font-size: 0.95rem; }
         }
     </style>
