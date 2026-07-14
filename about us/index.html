@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Car Club of Pune</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        /* --- GLOBAL RESET & DARK THEME --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body, html {
+            background-color: #030303; 
+            color: #F5F5F5; 
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        :root {
+            --gold: #D4AF37;
+            --dark: #030303;
+            --glass-border: rgba(212, 175, 55, 0.15);
+        }
+
+        h1, h2, h3, .cinzel { font-family: 'Cinzel', serif; }
+
+        /* --- NAVIGATION: TOP BAR --- */
+        #top-nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(3, 3, 3, 0.85); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 200;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 5%; 
+        }
+        .top-nav-logo img { height: 80px; width: auto; object-fit: contain; transition: transform 0.3s ease; }
+        .top-nav-logo:hover img { transform: scale(1.05); }
+        
+        .top-nav-links { display: flex; gap: 40px; }
+        .top-nav-links a {
+            color: #fff; text-decoration: none; font-size: 0.85rem; letter-spacing: 2px;
+            text-transform: uppercase; transition: color 0.3s ease;
+        }
+        .top-nav-links a:hover, .top-nav-links a.active { color: var(--gold); }
+
+        /* --- ABOUT HERO SECTION --- */
+        #about-hero { 
+            position: relative; width: 100vw; min-height: 100vh; 
+            background-color: #030303;
+            display: flex; align-items: center; justify-content: center;
+            padding-top: 100px; 
+        }
+        
+        /* High-Res Background Image Setup */
+        .bg-image {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            background-image: url('DJI_0031.JPG'); 
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            z-index: 1;
+        }
+        
+        /* Dark gradient overlay for text readability */
+        .bg-image::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 100%);
+        }
+
+        /* --- SMOKED GLASS CONTENT BOX --- */
+        .content-container {
+            position: relative; z-index: 10; width: 85%; max-width: 1000px;
+            margin: 40px 0; opacity: 0; transform: translateY(30px);
+        }
+
+        .hero-text-overlay {
+            font-size: 1.1rem; line-height: 1.8; letter-spacing: 0.5px; font-weight: 300;
+            color: #F5F5F5;
+            
+            /* Premium Smoked Glass - More Translucent Now */
+            background: rgba(15, 15, 15, 0.45); /* Lowered from 0.70 to let image shine */
+            backdrop-filter: blur(12px); /* Lowered blur so image details are visible */
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-left: 3px solid var(--gold); 
+            border-radius: 8px; 
+            
+            padding: 50px; 
+            box-shadow: 0 25px 60px rgba(0,0,0,0.95);
+        }
+
+        .hero-text-overlay h1 { 
+            color: var(--gold); font-size: 2.2rem; 
+            margin-bottom: 30px; letter-spacing: 4px; text-transform: uppercase;
+        }
+        .hero-text-overlay p { margin-bottom: 20px; color: #E0E0E0; text-align: justify; }
+        .hero-text-overlay p:last-child { margin-bottom: 0; }
+        
+        .highlight { color: #FFFFFF; font-weight: 600; text-shadow: 0 0 10px rgba(255,255,255,0.1); }
+
+        /* =========================================================
+           MOBILE RESPONSIVE
+           ========================================================= */
+        @media (max-width: 768px) {
+            
+            #top-nav { padding: 10px 5%; flex-direction: column; gap: 10px; } 
+            .top-nav-logo img { height: 50px; } 
+            .top-nav-links { display: flex; gap: 12px; width: 100%; justify-content: center; flex-wrap: wrap; }
+            .top-nav-links a { font-size: 0.65rem; letter-spacing: 1px; }
+
+            #about-hero { padding-top: 140px; padding-bottom: 40px; display: block; }
+            
+            .bg-image { background-position: top 15% center; }
+            .bg-image::after {
+                background: linear-gradient(to bottom, rgba(3,3,3,0.7) 0%, rgba(3,3,3,0.9) 100%);
+            }
+
+            .content-container { width: 92%; margin: 0 auto; margin-top: 5vh; }
+            
+            .hero-text-overlay { 
+                padding: 25px 15px; 
+                border-left: none; border-top: 2px solid var(--gold); 
+                font-size: 0.9rem; line-height: 1.6;
+            }
+            .hero-text-overlay h1 { font-size: 1.5rem; margin-bottom: 20px; letter-spacing: 2px; text-align: center; }
+            .hero-text-overlay p { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <header id="top-nav">
+        <a href="../index.html" class="top-nav-logo">
+            <img src="../ccp.png" alt="CCP Logo">
+        </a>
+        <nav class="top-nav-links">
+            <a href="../index.html">Home</a>
+            <a href="#" class="active">About Us</a>
+            <a href="../events.html">Past Events</a>
+            <a href="../gallery.html">Gallery</a>
+            <a href="../media.html">Media</a>
+        </nav>
+    </header>
+
+    <section id="about-hero">
+        <div class="bg-image"></div>
+        
+        <div class="content-container"> 
+            <div class="hero-text-overlay">
+                <h1 class="cinzel">About Car Club of Pune</h1>
+                
+                <p>Car Club of Pune is a community of car lovers, collectors, and enthusiasts from across the city. Our goal is simple — to bring people together through a shared love for automobiles, as we celebrate Pune’s motoring spirit and the cars that call the city their home. Pune has always possessed a rich automotive lineage, and we strive to be the modern torchbearers of that legacy.</p>
+                
+                <p>We welcome everyone, from seasoned collectors to young enthusiasts and families who enjoy cars. Through meet-ups, drives, and curated events, we create opportunities for people to connect, share stories, and build lasting memories. Whether it's an early morning drive navigating the sweeping roads of the Sahyadris or an evening showcase under the city lights, these moments forge bonds that go far beyond the tarmac.</p>
+                
+                <p>Our community celebrates everything from timeless classics — including <span class="highlight">90-year-old Rolls-Royces</span> — to modern performance cars like <span class="highlight">Ferraris and Lamborghinis</span>. Each vehicle has a unique story, and each owner plays a vital role in keeping that story alive. We take pride in gathering a diverse fleet that represents the very best of automotive engineering, design, and history.</p>
+                
+                <p>Car Club of Pune is not just about cars; it’s about the people behind them. We aim to preserve automotive heritage while inspiring the next generation to appreciate and enjoy the world of cars. By bringing these magnificent machines out of the garage and into the public eye, we ensure that the roar of the engines and the elegance of their design continue to captivate hearts for decades to come.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth entrance animation for the glass box
+        window.onload = () => {
+            gsap.to(".content-container", { 
+                opacity: 1, 
+                y: 0, 
+                duration: 1.2, 
+                ease: "power3.out", 
+                delay: 0.2 
+            });
+        };
+    </script>
+</body>
+</html>
