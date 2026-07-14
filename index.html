@@ -93,13 +93,12 @@
             opacity: 0; transform: scale(1);
             transition: opacity 2s ease-in-out, transform 6s linear;
         }
-        .slide.active { opacity: 1; transform: scale(1.05); /* Ken Burns Effect */ }
+        .slide.active { opacity: 1; transform: scale(1.05); }
         .slide::after {
             content: ''; position: absolute; inset: 0;
             background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%);
         }
 
-        /* CHANGED: Moved desktop text box up by ~20% */
         .hero-content {
             position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
             z-index: 10; text-align: center; width: 80%; max-width: 900px;
@@ -112,50 +111,83 @@
             padding: 40px; border-radius: 2px; border-left: 3px solid var(--gold);
         }
 
-        /* --- PURPOSE SECTION --- */
-        #purpose {
-            display: flex; flex-wrap: wrap; width: 100vw; min-height: 100vh;
-            background-color: #FFFFFF; /* White background */
+        /* --- HUB DIRECTORY SECTIONS --- */
+        #hub-sections {
+            padding: 100px 10% 120px 10%;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            background-color: #030303;
             position: relative;
+            z-index: 10;
         }
-        .purpose-image-container {
-            flex: 1 1 40%; min-width: 300px; height: 100vh; position: relative; overflow: hidden;
+
+        .hub-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 50px;
+            border-radius: 4px;
+            opacity: 0; transform: translateY(40px);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
         }
-        .purpose-bg {
-            position: absolute; top: -10%; left: 0; width: 100%; height: 120%;
-            background-image: url('7447.jpg'); background-size: cover; background-position: center;
+
+        .hub-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.05);
         }
-        .purpose-text-container {
-            flex: 1 1 60%; min-width: 300px; padding: 10%;
-            display: flex; flex-direction: column; justify-content: center;
+
+        .hub-card h2 {
+            font-size: 2.2rem;
+            color: #fff;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
         }
-        .section-title {
-            font-size: 2.5rem; color: #b8860b; /* Darker Gold for visibility on white */ 
-            margin-bottom: 40px; letter-spacing: 5px; text-transform: uppercase;
+        .hub-card h2 span { color: var(--gold); }
+
+        .hub-card p {
+            color: #CCCCCC;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
-        .purpose-paragraph {
-            font-size: 1.1rem; line-height: 2; margin-bottom: 25px;
-            color: #333333; /* Dark Grey text for white background */ 
-            opacity: 0; transform: translateY(30px); /* Setup for ScrollTrigger */
+
+        .redirect-btn {
+            display: inline-block;
+            padding: 12px 32px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            background: transparent;
+            border-radius: 2px;
+            transition: all 0.3s ease;
         }
-        .highlight { color: #000000; font-weight: 700; } /* Black highlight */
+
+        .redirect-btn:hover {
+            color: #030303;
+            background: var(--gold);
+            box-shadow: 0px 0px 15px rgba(212, 175, 55, 0.4);
+        }
 
         /* =========================================================
-           MOBILE RESPONSIVE OVERHAUL (Flawless Vertical Layout)
+           MOBILE RESPONSIVE OVERHAUL
            ========================================================= */
         @media (max-width: 768px) {
-            
-            /* 1. Fully visible car: Use contain and push it to the bottom half */
             .slide {
                 background-size: contain; 
                 background-position: center bottom 15%; 
             }
-            /* Adjust gradient for portrait orientation so the top stays dark for text */
             .slide::after {
                 background: linear-gradient(to bottom, rgba(3,3,3,1) 0%, rgba(3,3,3,0) 60%, rgba(3,3,3,0.8) 100%);
             }
 
-            /* 2. Hero Brand: Stack and center neatly at the very top */
             #hero-brand { 
                 top: 15px; 
                 left: 50%; 
@@ -170,9 +202,8 @@
             #hero-brand img { height: 60px; }
             #hero-brand .brand-text { font-size: 1.1rem; letter-spacing: 3px; }
 
-            /* 3. Text Box: Move UP into the dark space, making text smaller */
             .hero-content { 
-                top: 25%; /* Mobile override prevents desktop changes from affecting this */
+                top: 25%; 
                 bottom: auto; 
                 left: 50%; 
                 transform: translate(-50%, 0); 
@@ -187,10 +218,8 @@
                 background: rgba(3, 3, 3, 0.4); 
             }
 
-            /* 4. Hide horizontal side bar entirely */
             #left-nav { display: none; }
 
-            /* 5. FIX THE MENU: Bring top nav links back, optimized for small screens */
             #top-nav { 
                 padding: 10px 5%; 
                 flex-direction: column; 
@@ -208,11 +237,11 @@
                 letter-spacing: 1px;
             }
 
-            /* 6. Purpose Section adjustments */
-            .purpose-image-container { height: 40vh; }
-            .purpose-text-container { padding: 15% 5%; }
-            .section-title { font-size: 1.6rem; margin-bottom: 20px; }
-            .purpose-paragraph { font-size: 0.95rem; }
+            #hub-sections { padding: 50px 5% 60px 5%; gap: 35px; }
+            .hub-card { padding: 30px 20px; }
+            .hub-card h2 { font-size: 1.5rem; margin-bottom: 12px; }
+            .hub-card p { font-size: 0.9rem; margin-bottom: 20px; line-height: 1.6; }
+            .redirect-btn { padding: 10px 24px; font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -223,22 +252,20 @@
         <span class="brand-text">CAR CLUB OF PUNE</span>
     </div>
 
-    <!-- UPDATED: Pointed Gallery dynamically to the gallery folder -->
     <nav id="left-nav" style="opacity: 0;"> 
         <a href="about us/index.html" class="nav-link">About Us</a>
-        <a href="/events" class="nav-link">Past Events</a>
+        <a href="events/index.html" class="nav-link">Events</a>
         <a href="gallery/index.html" class="nav-link">Gallery</a>
         <a href="/media" class="nav-link">Media</a>
     </nav>
 
-    <!-- UPDATED: Pointed Gallery dynamically to the gallery folder -->
     <header id="top-nav">
         <a href="index.html" class="top-nav-logo">
             <img src="ccp.png" alt="CCP Logo">
         </a>
         <nav class="top-nav-links">
             <a href="about us/index.html">About</a>
-            <a href="/events">Events</a>
+            <a href="events/index.html">Events</a>
             <a href="gallery/index.html">Gallery</a>
             <a href="/media">Media</a>
         </nav>
@@ -250,33 +277,45 @@
             <div class="slide" style="background-image: url('dronemaher.jpg');"></div>
         </div>
         
-        <div class="hero-content" style="opacity: 0;"> <div class="hero-text-overlay cinzel">
+        <div class="hero-content" style="opacity: 0;"> 
+            <div class="hero-text-overlay cinzel">
                 Car Club of Pune is an initiative dedicated to building a vibrant community of passionate car collectors and enthusiasts across the city. Our aim is to nurture and celebrate the love for automobiles among Punekars - children and adults alike - creating an environment where families can come together and cherish the memories they create, one mile at a time.
             </div>
         </div>
     </section>
 
-    <section id="purpose">
-        <div class="purpose-image-container">
-            <div class="purpose-bg" id="purpose-parallax"></div>
+    <!-- HUB SECTIONS CONTAINER -->
+    <main id="hub-sections">
+
+        <!-- Section 1: About Us -->
+        <div class="hub-card">
+            <h2>About <span>Us</span></h2>
+            <p>Discover the vision, the community structure, and the absolute collective passion behind the Car Club of Pune. Learn what drives our curated circle of high-performance automotive owners.</p>
+            <a href="about us/index.html" class="redirect-btn">Explore Vision</a>
         </div>
-        
-        <div class="purpose-text-container">
-            <h2 class="section-title">Purpose of the Event</h2>
-            
-            <p class="purpose-paragraph">
-                We believe there is hardly a boy, girl, or gentleman in this world who isn't fascinated by power - whether it comes from the roar of an engine or the might of a military machine. Even someone driving a Ferrari would feel goosebumps standing beside a <span class="highlight">ground-shaking Indian Army tank</span> or witnessing the strength and discipline of our soldiers up close.
-            </p>
-            
-            <p class="purpose-paragraph">
-                For every gearhead and adrenaline enthusiast, our purpose is simple yet meaningful: <span class="highlight">to give the youth a chance to experience their dreams firsthand</span> — to stand beside the heroes they admire, witness the machines they've only seen from afar, and ignite within them a sense of passion, responsibility, and purpose.
-            </p>
-            
-            <p class="purpose-paragraph">
-                Through this show, we aim to motivate the next generation to chase their dreams with determination and integrity, inspired by the courage and commitment exemplified by the Indian Army.
-            </p>
+
+        <!-- Section 2: Events -->
+        <div class="hub-card">
+            <h2>Our <span>Events</span></h2>
+            <p>From precision dawn canyon runs to high-profile tarmac exhibitions and charity displays. Walk through our detailed operational history of automotive gatherings.</p>
+            <a href="events/index.html" class="redirect-btn">View Events</a>
         </div>
-    </section>
+
+        <!-- Section 3: Gallery -->
+        <div class="hub-card">
+            <h2>Our <span>Gallery</span></h2>
+            <p>Step directly into a high-resolution visual inventory of pure performance art. Browse captured media highlights from our active club drives and exclusive showrooms.</p>
+            <a href="gallery/index.html" class="redirect-btn">Open Showcase</a>
+        </div>
+
+        <!-- Section 4: Media Room -->
+        <div class="hub-card">
+            <h2>Media <span>Room</span></h2>
+            <p>Immerse yourself completely in the raw sounds and movements of elite machinery. Access our official event aftermovies, cinematic shorts, and sound clips.</p>
+            <a href="/media" class="redirect-btn">Enter Media</a>
+        </div>
+
+    </main>
 
     <script>
         // Initialize GSAP Plugins
@@ -287,11 +326,8 @@
             /* =========================================
                1. NORMAL INTRO ANIMATION (Fade In)
                ========================================= */
-            // Fade in the hero text box
             gsap.to(".hero-content", { opacity: 1, y: 0, duration: 1.5, ease: "power2.out", delay: 0.2 });
-            // Fade in the left side navigation
             gsap.to("#left-nav", { opacity: 1, duration: 1.5, ease: "power2.out", delay: 0.5 });
-            // Fade in the static hero brand
             gsap.to("#hero-brand", { opacity: 1, duration: 1.5, ease: "power2.out", delay: 0.5 });
             
             startSlideshow();
@@ -307,7 +343,7 @@
                     slides[currentSlide].classList.remove('active');
                     currentSlide = (currentSlide + 1) % slides.length;
                     slides[currentSlide].classList.add('active');
-                }, 5000); // Switches every 5 seconds
+                }, 5000);
             }
 
             /* =========================================
@@ -319,7 +355,6 @@
                 end: "bottom top", 
                 onUpdate: (self) => {
                     if(self.progress > 0.70) {
-                        // Hide Left Nav and Hero Brand, Show Top Nav smoothly
                         document.getElementById('left-nav').style.opacity = '0';
                         document.getElementById('left-nav').style.pointerEvents = 'none';
                         document.getElementById('hero-brand').style.opacity = '0';
@@ -328,7 +363,6 @@
                         document.getElementById('top-nav').style.transform = 'translateY(0)';
                         document.getElementById('top-nav').style.opacity = '1';
                     } else {
-                        // Reverse it smoothly
                         document.getElementById('left-nav').style.opacity = '1';
                         document.getElementById('left-nav').style.pointerEvents = 'all';
                         document.getElementById('hero-brand').style.opacity = '1';
@@ -341,32 +375,20 @@
             });
 
             /* =========================================
-               4. PARALLAX & FADE REVEALS FOR PURPOSE SECTION
+               4. SMOOTH SCROLL REVEALS FOR HUB CARDS
                ========================================= */
-            // Smooth Parallax on 7447.jpg
-            gsap.to("#purpose-parallax", {
-                yPercent: 20,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: "#purpose",
-                    start: "top bottom", 
-                    end: "bottom top",
-                    scrub: true
-                }
-            });
-
-            // Stagger fade-in the text paragraphs as you scroll
-            gsap.to(".purpose-paragraph", {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                stagger: 0.3,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: ".purpose-text-container",
-                    start: "top 75%", // Starts animating when container is 75% down the screen
-                    toggleActions: "play none none reverse"
-                }
+            gsap.utils.toArray('.hub-card').forEach(card => {
+                gsap.to(card, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
             });
         };
     </script>
