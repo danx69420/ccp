@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Car Club of Pune</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        /* --- GLOBAL RESET & THEME --- */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            -webkit-touch-callout: none; /* Prevent iOS mobile save prompt */
+            -webkit-user-select: none;   /* Prevent selection */
+            user-select: none;
+        }
+        body, html {
+            background-color: #030303; 
+            color: #F5F5F5; 
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden; /* Block all scrollbars for flush full-screen look */
+            height: 100%;
+            width: 100%;
+        }
+        
+        :root {
+            --gold: #D4AF37;
+            --dark: #030303;
+            --glass-border: rgba(212, 175, 55, 0.15);
+        }
+
+        h1, h2, h3, .cinzel { font-family: 'Cinzel', serif; }
+
+        /* --- NAVIGATION: FLOATING TOP BAR --- */
+        #top-nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(3, 3, 3, 0.5); /* More translucent to let images show through */
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 200;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 5%; 
+        }
+        
+        /* Integrated Text + Logo branding element */
+        .top-nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+        .top-nav-logo img { height: 80px; width: auto; object-fit: contain; transition: transform 0.3s ease; }
+        .top-nav-logo:hover img { transform: scale(1.05); }
+        
+        .top-nav-logo .brand-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            font-weight: 700;
+            text-shadow: 0px 4px 10px rgba(0,0,0,0.7);
+        }
+        
+        .top-nav-links { display: flex; gap: 40px; }
+        .top-nav-links a {
+            color: #fff; text-decoration: none; font-size: 0.85rem; letter-spacing: 2px;
+            text-transform: uppercase; transition: color 0.3s ease;
+        }
+        .top-nav-links a:hover, .top-nav-links a.active { color: var(--gold); }
+
+        /* --- FULL SCREEN SEAMLESS SLIDESHOW WRAPPER --- */
+        .gallery-viewport {
+            position: absolute;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            overflow: hidden;
+            background-color: #030303;
+        }
+
+        /* Cinematic vignette overlay & image blocker */
+        .image-guard-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            background: radial-gradient(circle, rgba(3,3,3,0.1) 0%, rgba(3,3,3,0.7) 100%),
+                        linear-gradient(to bottom, rgba(3,3,3,0.6) 0%, rgba(3,3,3,0) 25%, rgba(3,3,3,0) 75%, rgba(3,3,3,0.7) 100%);
+            cursor: default;
+        }
+
+        /* Image sizing config - covers everything, perfectly centered */
+        .gallery-viewport img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* --- CONTROLS: FLOATING ARROWS --- */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            background: rgba(3, 3, 3, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 1.5rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .arrow:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+            background: rgba(3, 3, 3, 0.8);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.35);
+        }
+        .arrow-left { left: 40px; }
+        .arrow-right { right: 40px; }
+
+        /* --- FLOATING DOTS --- */
+        .dots-container {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 20;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15); /* Faint and dark by default */
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .dot.active {
+            background: var(--gold);
+            transform: scale(1.4);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+        }
+
+        /* =========================================================
+           MOBILE RESPONSIVE OVERRIDES
+           ========================================================= */
+        @media (max-width: 768px) {
+            #top-nav { padding: 10px 5%; flex-direction: column; gap: 10px; } 
+            
+            .top-nav-logo { gap: 8px; }
+            .top-nav-logo img { height: 50px; } 
+            .top-nav-logo .brand-text { font-size: 1rem; letter-spacing: 2px; }
+
+            .top-nav-links { display: flex; gap: 12px; width: 100%; justify-content: center; flex-wrap: wrap; }
+            .top-nav-links a { font-size: 0.65rem; letter-spacing: 1px; }
+
+            .arrow { width: 45px; height: 45px; font-size: 1.1rem; }
+            .arrow-left { left: 15px; }
+            .arrow-right { right: 15px; }
+            
+            .dots-container { gap: 8px; bottom: 30px; }
+            .dot { width: 6px; height: 6px; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;"> <!-- Block Right Click Save Options Globally -->
+
+    <!-- Top Navigation -->
+    <header id="top-nav">
+        <a href="../index.html" class="top-nav-logo">
+            <img src="../ccp.png" alt="CCP Logo">
+            <span class="brand-text">CAR CLUB OF PUNE</span>
+        </a>
+        <nav class="top-nav-links">
+            <a href="../index.html">Home</a>
+            <a href="../about us/index.html">About Us</a>
+            <a href="../events.html">Past Events</a>
+            <a href="#" class="active">Gallery</a>
+            <a href="../media.html">Media</a>
+        </nav>
+    </header>
+
+    <!-- Seamless Full Screen Slideshow -->
+    <main class="gallery-viewport">
+        <!-- Overlay blocks click-and-drag downloads & creates beautiful shadow vignettes -->
+        <div class="image-guard-overlay"></div>
+        
+        <!-- Live Image Node -->
+        <img id="gallery-image" src="" alt="Car Club of Pune Gallery Image" draggable="false">
+        
+        <!-- Nav Arrows -->
+        <button class="arrow arrow-left" id="prev-btn">&#10094;</button>
+        <button class="arrow arrow-right" id="next-btn">&#10095;</button>
+
+        <!-- Dynamic Indicator Dots -->
+        <div class="dots-container" id="dots-wrapper"></div>
+    </main>
+
+    <script>
+        // Gallery File List (Specified images removed)
+        const images = [
+            '_MG_7575.JPG',
+            '0F1A8214.JPG',
+            'IMG_9606.jpg',
+            'IMG_9833.jpg',
+            'IMG_9861.jpg'
+        ];
+
+        let currentIndex = 0;
+        let slideInterval;
+        const imgElement = document.getElementById('gallery-image');
+        const dotsWrapper = document.getElementById('dots-wrapper');
+
+        // Render dots dynamically
+        function buildDots() {
+            images.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => navigateTo(index));
+                dotsWrapper.appendChild(dot);
+            });
+        }
+
+        // Clean GSAP Slide Swap and Fade
+        function displayImage(index) {
+            const dots = document.querySelectorAll('.dot');
+            
+            gsap.to(imgElement, {
+                opacity: 0,
+                scale: 1.02,
+                duration: 0.4,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    imgElement.src = images[index];
+                    imgElement.onload = () => {
+                        // Resets scale dynamically for Ken Burns-esque subtle feel
+                        gsap.fromTo(imgElement, 
+                            { scale: 1.05, opacity: 0 }, 
+                            { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" }
+                        );
+                    };
+                }
+            });
+
+            // Dot logic (dimming the rest, highlighting active with gold glow)
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+        }
+
+        function navigateTo(newIndex) {
+            resetTimer();
+            currentIndex = (newIndex + images.length) % images.length;
+            displayImage(currentIndex);
+        }
+
+        function startTimer() {
+            slideInterval = setInterval(() => {
+                navigateTo(currentIndex + 1);
+            }, 5000); // Swaps strictly every 5 seconds
+        }
+
+        function resetTimer() {
+            clearInterval(slideInterval);
+            startTimer();
+        }
+
+        // Button clicks
+        document.getElementById('prev-btn').addEventListener('click', () => navigateTo(currentIndex - 1));
+        document.getElementById('next-btn').addEventListener('click', () => navigateTo(currentIndex + 1));
+
+        // Keyboard commands (For clean desktop testing)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') navigateTo(currentIndex - 1);
+            if (e.key === 'ArrowRight') navigateTo(currentIndex + 1);
+        });
+
+        // Init Sequence
+        window.onload = () => {
+            buildDots();
+            imgElement.src = images[0];
+            gsap.to(imgElement, { opacity: 1, duration: 0.8 });
+            startTimer();
+        };
+    </script>
+</body>
+</html>
