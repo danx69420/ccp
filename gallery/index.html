@@ -195,9 +195,9 @@
         <nav class="top-nav-links">
             <a href="../index.html">Home</a>
             <a href="../about us/index.html">About Us</a>
-            <a href="../events.html">Past Events</a>
+            <a href="../events/index.html">Events</a>
             <a href="#" class="active">Gallery</a>
-            <a href="../media.html">Media</a>
+            <a href="/media">Media</a>
         </nav>
     </header>
 
@@ -218,13 +218,13 @@
     </main>
 
     <script>
-        // Gallery File List (Specified images removed)
+        // Gallery File List (Relative paths looking back into root gallery folder)
         const images = [
-            '_MG_7575.JPG',
-            '0F1A8214.JPG',
-            'IMG_9606.jpg',
-            'IMG_9833.jpg',
-            'IMG_9861.jpg'
+            '../gallery/_MG_7575.JPG',
+            '../gallery/0F1A8214.JPG',
+            '../gallery/IMG_9606.jpg',
+            '../gallery/IMG_9833.jpg',
+            '../gallery/IMG_9861.jpg'
         ];
 
         let currentIndex = 0;
