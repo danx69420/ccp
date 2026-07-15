@@ -45,18 +45,17 @@
             text-shadow: 0px 4px 15px rgba(0,0,0,0.9);
         }
 
-        /* --- NAVIGATION: LEFT SIDEBAR (HERO) --- */
+        /* --- NAVIGATION: TOP RIGHT BAR (HERO) --- */
         #left-nav {
-            position: fixed; top: 50%; left: 30px; transform: translateY(-50%);
+            position: fixed; top: 45px; right: 5%;
             z-index: 100;
             background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            padding: 30px 20px; border-radius: 15px;
-            display: flex; flex-direction: column; gap: 30px;
+            padding: 20px 30px; border-radius: 15px;
+            display: flex; flex-direction: row; gap: 30px; align-items: center;
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
         .nav-link {
-            writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
             color: #fff; text-decoration: none; font-size: 0.8rem;
             letter-spacing: 4px; text-transform: uppercase;
             transition: color 0.3s ease; opacity: 0.7;
